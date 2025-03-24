@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config'; // Import ConfigModule
+import { ConfigModule } from '@nestjs/config';
 import { ActivityModule } from './activity/activity.module';
 import { LessonModule } from './lesson/lesson.module';
 import { LevelModule } from './level/level.module';
