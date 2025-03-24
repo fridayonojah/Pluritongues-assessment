@@ -46,38 +46,17 @@ export class Lesson {
 
   @ManyToOne(() => Level, (level) => level.lessons, { onDelete: 'CASCADE' })
   level: Level;
-}-
-```
-
-- UserLessonProgress Entity
-
-```typescript @Entity()
-export class UserLessonProgress {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  userId: string;
-
-  @ManyToOne(() => Lesson)
-  lesson: Lesson;
-
-  @Column({ default: 0 })
-  progress: number;
-
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  lastUpdated: Date;
-
-  @VersionColumn()
-  version: number; // Prevents overwrites from concurrent updates
 }
 ```
 
-### Some Optimizations I considered:
+#### please find my full entity implementation inside src/docs folder.
+
+### Some Optimizations I would considered:
 
 - Indexes on userId, lessonId for faster lookups.
-- @VersionColumn() to prevent overwrites in concurrent updates.
 - Cascade deletion for automatic cleanup when a level is removed.
+- Use unique constraints on fields that should not have duplicate values, enhancing data integrity and performance.
+- Using caching mechanisms (like Redis) to store frequently accessed data, reducing the load on the database.
 
 ## Data Model Improvements
 
@@ -106,7 +85,7 @@ If we're expecting millions of users, we can consider the some optimizations ste
 - **Monitoring & Profiling**: Regularly analyze query performance and adjust indexing based on the queries that are frequently used.
 - **Caching**: Implement caching for frequently accessed data using Redis or similar to reduce database load.
 - **Partitioning**: Use table partitioning based on levels or lesson completion status for faster access to subsets of data.
-- Load Balancing: Implement read replicas to distribute read load.
+- **Async Processing**: Offload heavy operations like leaderboard updates to a queue system
 
 ### Is PostgreSQL still optimal?
 

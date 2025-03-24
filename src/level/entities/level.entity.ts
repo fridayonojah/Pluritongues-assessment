@@ -1,6 +1,11 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Lesson } from '../../lesson/entities/lesson.entity';
 
+export enum Language {
+  Igbo = 'Igbo',
+  Yoruba = 'Yoruba',
+}
+
 @Entity()
 export class Level {
   @PrimaryGeneratedColumn('uuid')
@@ -21,9 +26,10 @@ export class Level {
   @Column()
   level: string;
 
-  @Column({ type: 'enum', enum: ['Igbo', 'Yoruba', 'English'] })
-  language: 'Igbo' | 'Yoruba' | 'English';
-
+  @Column({
+    type: 'enum',
+    enum: Language,
+  })
   @Column({ default: 0 })
   completedLessons: number;
 

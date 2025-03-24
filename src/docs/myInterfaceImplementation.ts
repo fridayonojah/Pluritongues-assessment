@@ -57,7 +57,7 @@ interface VideoContentQuestion {
 interface VideoContentOption {
   id: string;
   text: string;
-  audioUrl?: string; // Make this optional since it might not always be provided.
+  audioUrl?: string;
 }
 
 interface FillTheGapQuestion {
@@ -73,5 +73,5 @@ interface FillTheGapQuestion {
 interface FillTheGapLessonOption {
   id: string;
   text: string;
-  audioUrl?: string; // Make this optional since it might not always be provided.
+  audioUrl?: string;
 }
