@@ -1,4 +1,4 @@
-# 🏆 Pluritongues Backend Assessment Submission
+# Pluritongues Backend Assessment Submission
 
 This repository contains my solution for the **Pluritongues backend assessment**, implementing a **NestJS API** with **TypeORM (PostgreSQL)**. The project includes database schema design, and basic API implementation.
 
