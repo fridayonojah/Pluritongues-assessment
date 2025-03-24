@@ -8,7 +8,7 @@ import { LevelModule } from './level/level.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: 'postgresql://tongue_user:U0ZmCQIk1HgCXqjgJ7HNjovw8LGkxvCS@dpg-cvg9gpdrie7s73bnhpc0-a.oregon-postgres.render.com/tongue',
+      url: proccess.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
       ssl: {
