@@ -1,30 +1,18 @@
-interface BaseEntity {
-  id: string;
-  title: string;
-  description: string;
-}
-
-interface Point {
-  id: string;
-  value: number;
-}
-
-// Use an Enum for Languages
-// Improvement: Define an enum for languages and use it throughout your interfaces. This enhances clarity and maintains consistency.
-enum LanguageCode {
+// Created an enum for the language so that languages can be easily added in the future.
+enum Language {
   Igbo = 'Igbo',
   Yoruba = 'Yoruba',
-  English = 'English',
 }
 
+// Created an enum type for the activity type instead of having them hardcoded inside the interfaces.
 enum ActivityType {
-  VideoContentActivity = 'VideoContentActivity',
-  FillTheGapActivity = 'FillTheGapActivity',
+  VideoContent = 'VideoContentActivity',
+  FillTheGap = 'FillTheGapActivity',
 }
 
-interface BaseQuestion {
-  instruction: string;
-  activityType: ActivityType;
+// Since the id is common across the interfaces, we can create a base interface that other interfaces can extend.
+interface BaseEntity {
+  id: string;
 }
 
 interface Level extends BaseEntity {
@@ -33,48 +21,57 @@ interface Level extends BaseEntity {
   level: string;
   title: string;
   description: string;
-  language: LanguageCode;
+  language: Language;
   completedLessons: number;
   totalLessons: number;
-  createdAt: Date; // New field
-  updatedAt: Date; // New field
 }
 
 interface Lesson extends BaseEntity {
+  title: string;
+  description: string;
   lessonNumber: number;
   exerciseCount: number;
   goal: string;
+  points: string[];
   isCompleted: boolean;
-  points: Point[];
 }
 
-interface Activities {
-  id: string;
-  levelId: string; // Use a specific type or reference
-  lessonId: string; // Use a specific type or reference
+interface Activities extends BaseEntity {
+  level: string;
+  lesson: string;
   lessons: Question[];
 }
 
 type Question = FillTheGapQuestion | VideoContentQuestion;
 
-interface VideoContentQuestion extends BaseQuestion {
+interface VideoContentQuestion {
+  instruction: string;
   question: {
     videoUrl: string;
   };
-  options: Option[];
+  activityType: ActivityType.VideoContent;
+  options: VideoContentOption[];
   answer: string;
 }
 
-interface Option {
+interface VideoContentOption {
   id: string;
   text: string;
-  audioUrl: string;
+  audioUrl?: string; // Make this optional since it might not always be provided.
 }
 
-interface FillTheGapQuestion extends BaseQuestion {
-  question: string;
+interface FillTheGapQuestion {
+  instruction: string;
+  activityType: ActivityType.FillTheGap;
   imageUrl?: string;
   audioUrl?: string;
-  options: Option[]; // Unified options interface
+  question: string;
+  options: FillTheGapLessonOption[];
   answer: string[];
+}
+
+interface FillTheGapLessonOption {
+  id: string;
+  text: string;
+  audioUrl?: string; // Make this optional since it might not always be provided.
 }

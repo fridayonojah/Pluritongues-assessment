@@ -1,8 +1,6 @@
 # 🏆 Pluritongues Backend Assessment Submission
 
-## 🚀 Introduction
-
-This repository contains my solution for the **Pluritongues backend assessment**, implementing a **NestJS API** with **TypeORM (PostgreSQL)**. The project includes database schema design, API implementation, scalability considerations, and solutions for handling concurrent lesson progress updates.
+This repository contains my solution for the **Pluritongues backend assessment**, implementing a **NestJS API** with **TypeORM (PostgreSQL)**. The project includes database schema design, and basic API implementation.
 
 ## Database Choice
 
@@ -85,13 +83,21 @@ export class UserLessonProgress {
 
 Some Potential Issues in the Original Interfaces:
 
-- Lack of Foreign Keys: The original design didn't define relations explicitly, making queries inefficient. Fixed by using @ManyToOne() & @OneToMany() relations.
+- I noticed inconsistency in Language Representation
+  The language property in the Level interface is limited to 'Igbo' | 'Yoruba'. if we plan to add more languages in the future we will have to come back to the code base to edit the union type to fit in
 
-- Progress Overwrites Issue: If multiple users/devices update progress, data may be lost. Fixed with @VersionColumn() (optimistic locking).
+- Redundant id Properties
+  In the given interface they are some propertices that are common accross other interfaces. we can seperate this common propertices into seperate base interface and allow other interfaces that needs them to just extend to it.
 
-- Scalability Concerns:
-  Solution: Index frequently used columns (userId, lessonId) for faster queries.
-  Solution: Use caching for read-heavy queries (e.g., Redis for quick lesson lookups).
+- Enum for activityType
+  The activityType property appears to have a limited set of values. Where appropriate, using an enum for these could increase type safety and readability:
+
+- I created a suggested Revised Interfaces inside the src/docs directory to better explain some changes I would make to the provided interfaces.
+
+#### Scalability Concerns:
+
+- Solution: Index frequently used columns (userId, lessonId) for faster queries.
+- Solution: Use caching for read-heavy queries (e.g., Redis for quick lesson lookups).
 
 ## Handling Large Datasets
 

@@ -1,22 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ActivityModule } from './activity/activity.module';
+import { LessonModule } from './lesson/lesson.module';
+import { LevelModule } from './level/level.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'language_user',
-      password: 'language_pass',
-      database: 'language_db',
+      url: 'postgresql://tongue_user:U0ZmCQIk1HgCXqjgJ7HNjovw8LGkxvCS@dpg-cvg9gpdrie7s73bnhpc0-a.oregon-postgres.render.com/tongue',
       autoLoadEntities: true,
       synchronize: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
+    ActivityModule,
+    LessonModule,
+    LevelModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
